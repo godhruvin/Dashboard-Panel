@@ -21,18 +21,19 @@ showLogin.addEventListener("click", function (event) {
 });
 
 // Function to show toast
-function showToast(message , bgcol="#c45c67") {
-    var toastEl = document.getElementById('toast');
+var toastEl = document.getElementById('toast');
+function showToast(message, bgcol = "#c45c67") {
     var toastBody = toastEl.querySelector('.toast-body');
     toastBody.textContent = message;
+    toastEl.style.backgroundColor = bgcol;
     toastEl.classList.remove('show', 'hide');
     toastEl.classList.add('show');
     setTimeout(() => {
         toastEl.classList.add('hide');
-    }, 2000);
+    }, 1500);
     setTimeout(() => {
         toastEl.classList.remove('show', 'hide');
-    }, 2500);
+    }, 2000);
 }
 
 let userDetails = JSON.parse(localStorage.getItem('userDetails')) || []; // For storing user details in local storage.
@@ -47,8 +48,7 @@ function navigateToDashBoard(event) {
         let email = document.getElementById('login-email').value.trim();
         let password = document.getElementById('login-pass').value.trim();
         if (email === "" || password === "") {
-            bgcol = toastEl.style.backgroundColor='#add8e6';
-            showToast("Please fill all the details..." , bgcol);
+            showToast("Please fill all the details...");
             return;
         }
 
@@ -56,19 +56,20 @@ function navigateToDashBoard(event) {
         const user = userDetails.find(u => u.email === email && u.password === password);
 
         if (!user) {
-            showToast("Invalid email or password." , bgcol);
+            showToast("Invalid email or password.");
             return;
         }
 
         // Successful login
-        bgcol = toastEl.style.backgroundColor='#add8e6';
-        showToast("Login successful!" ,bgcol);
+
+        showToast("Login successful!", "#add8e6");
         setTimeout(() => {
             window.location.href = `Dashboard.html`; // Redirect to dashboard after 2 seconds
         }, 2000);
 
     } else {
         // Registration logic
+
         let userName = document.getElementById('register-username').value.trim();
         let email = document.getElementById('register-email').value.trim();
         let password = document.getElementById('register-pass').value.trim();
@@ -76,15 +77,15 @@ function navigateToDashBoard(event) {
 
         // Check for empty fields
         if (userName === "" || email === "" || password === "") {
-            showToast("Please fill all the details..." , bgcol);
-            return; // Return to prevent registration
+            showToast("Please fill all the details...");
+            return;
         }
 
         // Check for existing user
         const existingUser = userDetails.find(u => u.email === email);
         if (existingUser) {
-            showToast("User already exists. Please log in." , bgcol);
-            return; // Return to prevent registration
+            showToast("User already exists. Please log in.");
+            return;
         }
 
         // Register the new user
@@ -92,10 +93,10 @@ function navigateToDashBoard(event) {
         localStorage.setItem('userDetails', JSON.stringify(userDetails));
 
         // Successful registration
-        bgcol = toastEl.style.backgroundColor='#add8e6';
-        showToast("Registered successfully!" , bgcol);
+
+        showToast("Registered successfully!", "#add8e6");
         setTimeout(() => {
-            window.location.href = `Dashboard.html`; // Redirect to dashboard after 2 seconds
+            window.location.href = `Dashboard.html`;
         }, 2000);
     }
 }

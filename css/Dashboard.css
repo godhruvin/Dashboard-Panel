@@ -1,0 +1,101 @@
+/* Sidebar styling */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: linear-gradient(135deg, #343a40, #3c4043); /* Gradient background */
+    color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    transition: all 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.sidebar h3 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: bold;
+    color: #f8f9fa; /* Lighter color for the title */
+}
+
+.nav-link {
+    font-size: 1.1rem;
+    color: #f8f9fa; /* Default color for the links */
+    padding: 15px 20px;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+    opacity: 1; /* Ensure links are visible */
+}
+
+.nav-link:hover {
+    background-color: #79a3ce; /* Hover effect */
+    color: white;
+}
+
+.nav-item:not(:last-child) {
+    margin-bottom: 15px; /* Spacing between nav items */
+}
+
+.sidebar ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.sidebar a.active {
+    background-color: #495057; /* Highlight active link */
+    color: #fff;
+}
+
+/* Sidebar toggle effect for small screens */
+.sidebar.collapsed {
+    width: 60px;
+}
+
+.sidebar.collapsed .nav-link {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.sidebar.collapsed .nav-link span {
+    display: none;
+}
+
+/* Content styling */
+.content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    padding: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar.collapsed + .content {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+}
+
+/* Card styling */
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Card shadow for better look */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .content {
+        margin-left: 0;
+        width: 100%;
+    }
+    .sidebar {
+        width: 60px; /* Collapsed view on small screens */
+    }
+    .sidebar .nav-link {
+        text-align: center;
+        padding: 10px 0;
+    }
+    .sidebar .nav-link span {
+        display: none;
+    }
+}
