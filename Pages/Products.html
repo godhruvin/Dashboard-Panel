@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products Table</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/Dashboard.css">
+</head>
+
+<body>
+    <!-- Add Product Form -->
+<div class="row mt-4" id="productSection" style="display: none;">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Add New Product</h5>
+                <form id="productForm">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title:</label>
+                        <input type="text" id="title" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price:</label>
+                        <input type="number" id="price" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description:</label>
+                        <textarea id="description" class="form-control" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image URL:</label>
+                        <input type="url" id="image" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category:</label>
+                        <input type="text" id="category" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Product</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Product Table -->
+<div class="row mt-4" id="productTableSection" style="display: none;">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Products</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Price</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Category</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+<script src="/js/Product.js"></script>
+
+</html>

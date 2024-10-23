@@ -1,4 +1,9 @@
 /* Sidebar styling */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+* {
+  font-family:"Montserrat", sans-serif;
+}
 .sidebar {
     width: 250px;
     height: 100vh;
@@ -10,6 +15,7 @@
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
     transition: all 0.3s ease-in-out;
     z-index: 1000;
+    overflow-y: auto;
 }
 
 .sidebar h3 {
@@ -70,6 +76,7 @@
     transition: all 0.3s ease-in-out;
 }
 
+
 .sidebar.collapsed + .content {
     margin-left: 60px;
     width: calc(100% - 60px);
@@ -80,22 +87,75 @@
     border: none;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Card shadow for better look */
+    cursor :pointer;
 }
 
-/* Responsive Design */
+/* responsiveness */
+
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 200px; /* Shrink sidebar */
+    }
+    
+    .content {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+    }
+}
+
+/* Tablets and smaller screens (max-width: 768px) */
 @media (max-width: 768px) {
+    .sidebar {
+        width: 180px;
+    }
+    
+    .content {
+        margin-left: 180px;
+        width: calc(100% - 180px);
+    }
+
+    .sidebar.collapsed {
+        width: 60px;
+    }
+
+    .sidebar.collapsed + .content {
+        margin-left: 60px;
+        width: calc(100% - 60px);
+    }
+}
+
+/* Mobile screens (max-width: 644px) */
+@media (max-width: 644px) {
+    body {
+        flex-direction: column; /* Stack sidebar and content vertically */
+    }
+
+    .sidebar {
+        display: none; /* Hide sidebar */
+    }
+
+    .sidebar-toggle {
+        display: block;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        background-color: #343a40;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        z-index: 1100;
+    }
+
     .content {
         margin-left: 0;
         width: 100%;
+        display: flex;
+        flex-direction: column; /* Stack cards vertically */
     }
-    .sidebar {
-        width: 60px; /* Collapsed view on small screens */
-    }
-    .sidebar .nav-link {
-        text-align: center;
-        padding: 10px 0;
-    }
-    .sidebar .nav-link span {
-        display: none;
+
+    .card {
+        max-width: 100%; /* Make sure cards take full width on smaller screens */
+        flex: 1 1 100%;  /* Ensure cards don't overflow */
     }
 }

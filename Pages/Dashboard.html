@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,213 +12,219 @@
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
 
-<!-- Sidebar -->
-<div class="d-flex">
-    <div class="sidebar bg-dark text-white p-3" id="sidebar">
-        <h3 class="text-center">E-Commerce Admin</h3>
-        <ul class="nav flex-column mt-4">
-            <li class="nav-item">
-                <a class="nav-link text-white" href="#">Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="#">Orders</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="#" id="productsLink">Products</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="#">Customers</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="#">Reports</a>
-            </li>
-        </ul>
+    <!-- Sidebar -->
+    <div class="d-flex">
+        <div class="sidebar bg-dark text-white p-3" id="sidebar">
+            <h3 class="text-center">E-Commerce Admin</h3>
+            <ul class="nav flex-column mt-4">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#" id="productsLink">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Reports</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content p-4" id="main-content">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Dashboard</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <!-- <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            </li> -->
+                        </ul>
+                        <div class="d-flex">
+                            <button class="btn btn-danger me-4 rounded"
+                                onclick="showNotification()">Notifications</button>
+                            <button class="btn btn-outline-primary" onclick="logOut()">Log Out</button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Dashboard Metrics -->
+            <div class="row mt-4">
+                <!-- Orders Card -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card bg-primary text-white h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Orders</h5>
+                            <h3 id="totalOrders"></h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sales Card -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card bg-success text-white h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Sales</h5>
+                            <h3 id="totalSales"></h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- Customers Card -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card bg-info text-white h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Customers</h5>
+                            <h3 id="totalCustomers"></h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- Products Card -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card bg-warning text-white h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Products</h5>
+                            <h3 id="totalProducts"></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sales Chart -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Sales Overview</h5>
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Latest Orders -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Latest Orders</h5>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Status</th>
+                                        <th>Total</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orderTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Product Form
+            <div class="row mt-4" id="productSection" style="display: none;">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Add New Product</h5>
+                            <form id="productForm">
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Title:</label>
+                                    <input type="text" id="title" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="price" class="form-label">Price:</label>
+                                    <input type="number" id="price" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description:</label>
+                                    <textarea id="description" class="form-control" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="image" class="form-label">Image URL:</label>
+                                    <input type="url" id="image" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="category" class="form-label">Category:</label>
+                                    <input type="text" id="category" class="form-control" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Product</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- Product Table
+            <div class="row mt-4" id="productTableSection" style="display: none;">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Products</h5>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Title</th>
+                                        <th>Price</th>
+                                        <th>Description</th>
+                                        <th>Image</th>
+                                        <th>Category</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="content p-4" id="main-content">
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Dashboard</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                    </ul>
-                    <div class="d-flex">
-                        <button class="btn btn-outline-dark me-2" onclick="showNotification()">Notifications</button>
-                        <button class="btn btn-outline-primary" onclick="logOut()">Log Out</button>
-                    </div>
+    <!-- opening modal for confirmation about log out . -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Log Out Confirmation</h5>
+                    <button type="button" class="close" id="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </div>
-        </nav>
-
-        <!-- Dashboard Metrics -->
-        <div class="row mt-4">
-            <!-- Orders Card -->
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card bg-primary text-white h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Orders</h5>
-                        <h3 id="totalOrders"></h3>
-                    </div>
+                <div class="modal-body">
+                    <h3>Are Yor Sure You Want to Log out ?  </h3>
                 </div>
-            </div>
-            <!-- Sales Card -->
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card bg-success text-white h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Sales</h5>
-                        <h3 id="totalSales"></h3>
-                    </div>
-                </div>
-            </div>
-            <!-- Customers Card -->
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card bg-info text-white h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Customers</h5>
-                        <h3 id="totalCustomers"></h3>
-                    </div>
-                </div>
-            </div>
-            <!-- Products Card -->
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card bg-warning text-white h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Products</h5>
-                        <h3 id="totalProducts"></h3>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btn">Log Out</button>
                 </div>
             </div>
         </div>
-
-        <!-- Sales Chart -->
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Sales Overview</h5>
-                        <canvas id="salesChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Latest Orders -->
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Latest Orders</h5>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Order ID</th>
-                                    <th>Customer</th>
-                                    <th>Status</th>
-                                    <th>Total</th>
-                                    <th>Date</th>
-                                </tr>
-                            </thead>
-                            <tbody id="orderTableBody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Add Product Form -->
-        <div class="row mt-4" id="productSection" style="display: none;">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Add New Product</h5>
-                        <form id="productForm">
-                            <div class="mb-3">
-                                <label for="title" class="form-label">Title:</label>
-                                <input type="text" id="title" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="price" class="form-label">Price:</label>
-                                <input type="number" id="price" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Description:</label>
-                                <textarea id="description" class="form-control" required></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="image" class="form-label">Image URL:</label>
-                                <input type="url" id="image" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="category" class="form-label">Category:</label>
-                                <input type="text" id="category" class="form-control" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Add Product</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Product Table -->
-        <div class="row mt-4" id="productTableSection" style="display: none;">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Products</h5>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Title</th>
-                                    <th>Price</th>
-                                    <th>Description</th>
-                                    <th>Image</th>
-                                    <th>Category</th>
-                                </tr>
-                            </thead>
-                            <tbody id="productTableBody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
-</div>
-
-<!-- opening modal for confirmation about log out . -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-          <button type="button" class="close" id="close"  data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="btn">Log Out</button>
-        </div>
-      </div>
-    </div>
-  </div>
-<!-- Bootstrap JS and Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Custom JavaScript -->
-<script src="/js/main.js"></script>
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="/js/main.js"></script>
 </body>
+
 </html>

@@ -62,7 +62,7 @@ function navigateToDashBoard(event) {
 
         // Successful login
 
-        showToast("Login successful!", "#add8e6");
+        showToast("Login successful!", "#0D6EFD");
         setTimeout(() => {
             window.location.href = `Dashboard.html`; // Redirect to dashboard after 2 seconds
         }, 2000);

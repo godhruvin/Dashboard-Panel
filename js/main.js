@@ -3,16 +3,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Show products section when the products link is clicked
     document.getElementById('productsLink').addEventListener('click', function () {
-        document.getElementById('productSection').style.display = 'block';
-        document.getElementById('productTableSection').style.display = 'block';
-
+        window.location.href=`Products.html`;
         // Fetch and display existing products if any
         fetchProducts();
     });
 
     // Handle form submission for adding a product
     document.getElementById('productForm').addEventListener('submit', async function (event) {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault();
 
         // Get form values
         const title = document.getElementById('title').value;
@@ -61,7 +59,7 @@ async function fetchDashboardData() {
                 return total + (product.price * item.quantity);
             }, 0);
             return acc + orderTotal;
-        }, 0).toFixed(2); // Sum of product prices in orders
+        }, 0).toFixed(2);
 
         // Update dashboard metrics for products and sales
         document.getElementById('totalProducts').textContent = totalProducts;
@@ -199,26 +197,17 @@ function showNotification() {
     alert('You Don\'t Have Any Notifications!');
 }
 
-// Log out functionality with opening modal to confirm about delete or not.
+// Log out functionality with modal to confirm log out .
 function logOut() {
-    const modal = document.getElementById('exampleModalCenter');
-    modal.style.display = 'block';
 
-    const closeButton = document.getElementById('close');
-    closeButton.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
+    const modal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
+    modal.show();
 
     const confirmButton = document.getElementById('btn');
-    confirmButton.addEventListener('click', () => {
-        modal.style.display = 'none';
-        window.location.href = 'Login-Register.html'; 
-    });
 
-    window.onclick = (event) => {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    };
+    confirmButton.addEventListener('click', () => {
+        modal.hide();
+        window.location.href = 'Login-Register.html';
+    });
 }
 
