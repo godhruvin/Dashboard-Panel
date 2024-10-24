@@ -3,8 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Show products section when the products link is clicked
     document.getElementById('productsLink').addEventListener('click', function () {
-        window.location.href=`Products.html`;
-        // Fetch and display existing products if any
+        document.getElementById('productSection').style.display = 'block';
+        document.getElementById('productTableSection').style.display = 'block';
+
         fetchProducts();
     });
 
@@ -19,8 +20,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const image = document.getElementById('image').value;
         const category = document.getElementById('category').value;
         const products = document.getElementById('productTableBody').rows.length;
+        console.log(products);
         const storedProducts = JSON.parse(localStorage.getItem('products')) || [];
-        const newId = products.length + 1;
+        const newId = products + 1;
 
         const newProduct = {
             id: newId,
@@ -79,32 +81,33 @@ async function fetchDashboardData() {
 }
 
 // Populate the Latest Orders table
-function populateLatestOrders(orders, products) {
-    const orderTableBody = document.getElementById('orderTableBody');
-    orderTableBody.innerHTML = ''; // Clear any existing content
+// function populateLatestOrders(orders, products) {
+//     const orderTableBody = document.getElementById('orderTableBody');
+//     orderTableBody.innerHTML = ''; // Clear any existing content
 
-    // Display the most recent 5 orders (if available)
-    const latestOrders = orders.slice(-5); // Get the last 5 orders
-    latestOrders.forEach(order => {
-        const row = document.createElement('tr');
-        const productDetails = order.products.map(item => {
-            const product = products.find(p => p.id === item.productId);
-            return `${product.title} (x${item.quantity})`;
-        }).join(', ');
+//     // Display the most recent 5 orders (if available)
+//     const latestOrders = orders.slice(-5); // Get the last 5 orders
 
-        row.innerHTML = `
-            <td>${order.id}</td>
-            <td>${productDetails}</td>
-            <td>${order.completed ? 'Completed' : 'Pending'}</td>
-            <td>$${order.products.reduce((acc, item) => {
-            const product = products.find(p => p.id === item.productId);
-            return acc + (product.price * item.quantity);
-        }, 0).toFixed(2)}</td>
-            <td>${new Date(order.date).toLocaleDateString()}</td>
-        `;
-        orderTableBody.appendChild(row);
-    });
-}
+//     latestOrders.forEach(order => {
+//         const row = document.createElement('tr');
+//         const productDetails = order.products.map(item => {
+//             const product = products.find(p => p.id === item.productId);
+//             return `${product.title} (x${item.quantity})`;
+//         }).join(', ');
+
+//         row.innerHTML = `
+//             <td>${order.id}</td>
+//             <td>${productDetails}</td>
+//             <td>${order.completed ? 'Completed' : 'Pending'}</td>
+//             <td>$${order.products.reduce((acc, item) => {
+//             const product = products.find(p => p.id === item.productId);
+//             return acc + (product.price * item.quantity);
+//         }, 0).toFixed(2)}</td>
+//             <td>${new Date(order.date).toLocaleDateString()}</td>
+//         `;
+//         orderTableBody.appendChild(row);
+//     });
+// }
 
 // Function to fetch products and update the product table
 async function fetchProducts() {
@@ -162,7 +165,7 @@ function updateTotalProductsCount() {
 // Mock function to simulate adding a product
 async function addProduct(product) {
     console.log('Product added:', product);
-    // Here you would normally make an API call to add the product to your database
+   
 }
 
 // Initialize the dashboard by fetching data
@@ -176,7 +179,7 @@ const salesChart = new Chart(ctx, {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
         datasets: [{
             label: 'Sales ($)',
-            data: [500, 1000, 750, 1250, 1750, 1500, 2000], // These values can be updated dynamically if required
+            data: [500, 1000, 750, 1250, 1750, 1500, 2000], 
             borderColor: 'rgba(75, 192, 192, 1)',
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             borderWidth: 2,

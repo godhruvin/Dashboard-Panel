@@ -64,7 +64,7 @@ function navigateToDashBoard(event) {
 
         showToast("Login successful!", "#0D6EFD");
         setTimeout(() => {
-            window.location.href = `Dashboard.html`; // Redirect to dashboard after 2 seconds
+            window.location.href = `Dashboard.html`; // Redirect to dashboard after 2 seconds.
         }, 2000);
 
     } else {
@@ -94,7 +94,7 @@ function navigateToDashBoard(event) {
 
         // Successful registration
 
-        showToast("Registered successfully!", "#add8e6");
+        showToast("Registered successfully!", "#0D6EFD");
         setTimeout(() => {
             window.location.href = `Dashboard.html`;
         }, 2000);

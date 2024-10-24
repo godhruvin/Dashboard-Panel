@@ -131,11 +131,11 @@
     }
 
     .sidebar {
-        display: none; /* Hide sidebar */
+        display: none;
     }
 
     .sidebar-toggle {
-        display: block;
+        display: block; 
         position: fixed;
         top: 10px;
         left: 10px;
