@@ -1,11 +1,15 @@
 // function to generate the chart for sales report
+
+let salesChartInstance = null;
 function generateSalesReport() {
     const ctx = document.getElementById('salesChart').getContext('2d');
+
+    if(salesChartInstance) salesChartInstance.destroy();
     const salesData = {
         labels: ['Customers', 'Products', 'Orders', 'Sales'],
         datasets: [{
             label: 'Sales Overview',
-            data: [100, 200, 77, 4691.27],
+            data: [2000, 1200, 40000 , 56660.456],
             backgroundColor: [
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(255, 206, 86, 0.2)',
@@ -22,7 +26,9 @@ function generateSalesReport() {
         }]
     };
 
-    const salesChart = new Chart(ctx, {
+    
+
+    salesChartInstance = new Chart(ctx, {
         type: 'pie', 
         data: salesData,
         options: {
@@ -32,6 +38,7 @@ function generateSalesReport() {
                 }
             },
             responsive: true,
+            maintainAspectRatio:true,
             plugins: {
                 legend: {
                     position: 'top',

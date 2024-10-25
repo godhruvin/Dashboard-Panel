@@ -214,3 +214,20 @@ function logOut() {
     });
 }
 
+// function to open the side bar and collapse the sidebar
+// Function to toggle sidebar
+function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const content = document.querySelector('.content');
+    const isCollapsed = sidebar.classList.toggle('collapsed'); // Toggle class and get the new state
+
+    // Adjust the content margin based on the sidebar's width
+    if (isCollapsed) {
+        content.style.marginLeft = '0'; // No margin when sidebar is collapsed
+    } else {
+        content.style.marginLeft = '250px'; // Adjust margin for expanded sidebar
+    }
+}
+
+// Event listener for the toggle button
+document.querySelector('#toggleSideBar').addEventListener('click', toggleSidebar);

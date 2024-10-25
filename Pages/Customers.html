@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customers Management</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
     <style>
         body {
             background: linear-gradient(to right, rgba(45, 52, 54, 0.9), rgba(236, 240, 241, 0.9));
@@ -132,31 +130,25 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="customerTableBody">
-                    <!-- Customer rows will be dynamically added here -->
-                </tbody>
+                <tbody id="customerTableBody"></tbody>
             </table>
+        </div>
 
-            <!-- Opening modal for confirmation of Delete of the customer -->
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Delete Confirmation</h5>
-                            <button type="button" class="close" id="close" data-dismiss="modal" data-bs-dismiss="modal"
-                                aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <h3>Are Yor Sure You Want to Delete the Customer ? </h3>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="btn">Delete</button>
-                        </div>
+        <!-- Modal for delete confirmation -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Delete Confirmation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this customer?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="confirmDeleteButton">Delete</button>
                     </div>
                 </div>
             </div>
@@ -195,13 +187,11 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Fetch API and Custom JavaScript -->
     <script>
         let editingUserId = null;
-
-        // Function to fetch users from the API and display in the table
+        // Fetch users and display in table
         function fetchUsers() {
-            fetch('https://fakestoreapi.com/users')
+            fetch(`https://fakestoreapi.com/users`)
                 .then(response => response.json())
                 .then(data => {
                     const customerTableBody = document.getElementById('customerTableBody');
@@ -227,36 +217,34 @@
                 .catch(error => console.error('Error fetching customer data:', error));
         }
 
-        // Function to confirm delete action
+        // Confirm delete action and handle deletion
         function confirmDelete(userId) {
             const modal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
             modal.show();
 
-            const confirmButton = document.getElementById('btn');
-
-            confirmButton.addEventListener('click', () => {
+            const confirmButton = document.getElementById('confirmDeleteButton');
+            confirmButton.onclick = () => {
                 deleteUser(userId);
                 modal.hide();
-            });
-
+            };
         }
 
-        // Function to delete a user
+        // Delete user
         function deleteUser(userId) {
             fetch(`https://fakestoreapi.com/users/${userId}`, {
                 method: "DELETE"
             })
-                .then(res => res.json())
-                .then(json => {
+                .then(res => console.log(res.json()))
+                .then(() => {
                     fetchUsers(); // Refresh the user list
                 })
                 .catch(error => console.error('Error deleting user:', error));
         }
 
-        // Function to edit user
+        // Edit user and pre-fill form with existing data
         function editUser(userId) {
             editingUserId = userId;
-            fetch(`https://fakestoreapi.com/users/${userId}`)
+            fetch(`https://fakestoreapi.com/users/${editingUserId}`)
                 .then(res => res.json())
                 .then(user => {
                     document.getElementById('editFirstName').value = user.name.firstname;
@@ -270,7 +258,7 @@
                 .catch(error => console.error('Error fetching user data for editing:', error));
         }
 
-        // Function to save edited user
+        // Save edited user data
         document.getElementById('saveUserButton').addEventListener('click', () => {
             const updatedUser = {
                 email: document.getElementById('editEmail').value,
@@ -292,20 +280,21 @@
                 },
                 phone: document.getElementById('editPhone').value
             };
+        console.log(updatedUser);
 
             fetch(`https://fakestoreapi.com/users/${editingUserId}`, {
                 method: "PUT",
                 body: JSON.stringify(updatedUser),
+                
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
-                .then(res => res.json())
-                .then(json => {
-                    console.log(json);
+                .then(res => console.log(res.json()))
+                .then(() => {
                     editingUserId = null;
-                    fetchUsers();
                     document.getElementById('editUserForm').style.display = 'none';
+                    fetchUsers();
                 })
                 .catch(error => console.error('Error updating user:', error));
         });
@@ -313,10 +302,9 @@
         // Initial fetch of users
         fetchUsers();
 
-        const backbtn = document.getElementById('back');
-        backbtn.addEventListener('click', () => {
+        // Back button functionality
+        document.getElementById('back').addEventListener('click', () => {
             window.location.href = 'Dashboard.html';
-
         });
     </script>
 </body>

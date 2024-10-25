@@ -10,6 +10,7 @@
 
         * {
             font-family: "Montserrat", sans-serif;
+            /* box-sizing: border-box; */
         }
 
         body {
@@ -25,20 +26,89 @@
         }
 
         .card-title {
-            font-weight: bold;
-            margin-bottom: 20px;
+            font-size: 1.5rem;
         }
-        .buttons{
-            display:flex;
+
+        .buttons {
+            display: flex;
             justify-content: space-between;
         }
-        .buttons .btn-success{
+
+        .buttons .btn-success {
             width: 200px;
         }
+
         #salesChart {
             max-width: 600px;
             max-height: 400px;
             margin: auto;
+            overflow: hidden;
+        }
+
+        canvas {
+            max-width: 100%;
+            /* Prevent canvas from exceeding container width */
+            max-height: 100%;
+            /* Prevent canvas from exceeding container height */
+        }
+
+
+        /* Responsiveness  */
+        @media (max-width: 300px) {
+            #salesReport {
+                height: 200px;
+                /* Adjust height for smaller screens */
+            }
+        }
+
+        @media (min-width: 1200px) {
+            #salesReport {
+                height: 600px;
+                /* Adjust height for extra-large screens */
+                max-width: 1000px;
+                /* Set a larger max width */
+            }
+        }
+
+        @media (min-width: 768px) {
+            #salesReport {
+                height: 500px;
+                /* Adjust height for larger screens */
+                max-width: 800px;
+                /* Set a larger max width */
+            }
+        }
+
+        /* For Tablets */
+        @media (max-width:768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .card-title {
+                text-Align: center;
+            }
+
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .buttons .btn-success,
+            .buttons .btn-primary {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            #salesChart {
+                margin-bottom: 0.9rem;
+                height: auto;
+                max-width: 600px;
+            }
+
+            .card-title {
+                font-size: 1.25rem;
+            }
         }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -49,7 +119,7 @@
 <body>
     <!-- Reports Section -->
     <div class="row mt-4" id="reportsSection">
-        <div class="col-12">
+        <div class="col-12 col-md-8 col-lg-6">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Sales Reports</h5>
