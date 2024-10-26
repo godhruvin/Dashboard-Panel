@@ -51,6 +51,9 @@ function generateSalesReport() {
         }
     })
 }
+// Automatically updates the chart as soon as the user comes.
+document.onload(generateSalesReport());
+
 function NavigateToDashboard(){
     window.location.href = `Dashboard.html`;
     

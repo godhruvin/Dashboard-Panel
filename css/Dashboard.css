@@ -3,10 +3,12 @@
 
 * {
   font-family:"Montserrat", sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .sidebar {
-    width: 250px;
+    width: 200px;
     height: 100vh;
     position: fixed;
     top: 0;
@@ -75,7 +77,7 @@
 
 /* Content styling */
 .content {
-    margin-left: 250px;
+    margin-left: 190px;
     width: calc(100% - 250px);
     transition: margin-left 0.3s ease;
 }
@@ -93,11 +95,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Card shadow for better look */
     cursor :pointer;
 }
-#toggleSideBar{
-    font-size:2rem;
-    color:black;
-    cursor: pointer;
-}
+
 
 /* responsiveness */
 
@@ -130,11 +128,6 @@
     .sidebar.collapsed + .content {
         margin-left: 60px;
         width: calc(100% - 60px);
-    }
-    #toggleSideBar{
-        font-size:3rem;
-        color: red;
-        cursor: pointer;
     }
 }
 
